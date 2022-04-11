@@ -7,9 +7,23 @@ import (
 	"strconv"
 )
 
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+
+	if r.Method != "GET" {
+		http.Error(w, "Method is not supported", http.StatusNotFound)
+		return
+	}
+
+	http.ServeFile(w, r, "./static/index.html")
+}
+
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/hello" {
-		http.Error(w, "404 not found", http.StatusNotFound)
+		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
 
@@ -23,7 +37,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 
 func tenHelloWorldsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/tenhelloworlds" {
-		http.Error(w, "404 not found", http.StatusNotFound)
+		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
 
@@ -44,17 +58,23 @@ func rightWayHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.URL.Path == "/therightway" {
-		fmt.Fprintf(w, "You got to this page the right way!")
+		fmt.Fprintf(w, "You got to this page the right way!!")
 	} else if r.URL.Path == "/thewrongway" {
-		fmt.Fprintf(w, "You got to this page the wrong way!")
+		fmt.Fprintf(w, "You got to this page the wrong way!!")
 	} else {
-		http.Error(w, "404 not found", http.StatusNotFound)
+		errorHandler(w, r, http.StatusNotFound)
+	}
+}
+
+func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
+	w.WriteHeader(status)
+	if status == http.StatusNotFound {
+		http.ServeFile(w, r, "./static/404.html")
 	}
 }
 
 func main() {
-	fileServer := http.FileServer(http.Dir("./static"))
-	http.Handle("/", fileServer)
+	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/tenhelloworlds", tenHelloWorldsHandler)
 	http.HandleFunc("/therightway", rightWayHandler)
