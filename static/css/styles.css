@@ -1,0 +1,16 @@
+.center {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text{
+    font-size: 100px;
+    font-weight: bold;
+}
+
+.br {
+    display: block;
+    margin-bottom: 5em;
+}

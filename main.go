@@ -58,9 +58,9 @@ func rightWayHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.URL.Path == "/therightway" {
-		fmt.Fprintf(w, "You got to this page the right way!!")
+		fmt.Fprintf(w, "You got to this page the right way!")
 	} else if r.URL.Path == "/thewrongway" {
-		fmt.Fprintf(w, "You got to this page the wrong way!!")
+		fmt.Fprintf(w, "You got to this page the wrong way!")
 	} else {
 		errorHandler(w, r, http.StatusNotFound)
 	}
