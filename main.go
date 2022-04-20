@@ -66,6 +66,20 @@ func rightWayHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func fruitHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/fruit" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+
+	if r.Method != "GET" {
+		http.Error(w, "Method is not supported", http.StatusNotFound)
+		return
+	}
+
+	http.ServeFile(w, r, "./static/fruit.html")
+}
+
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {
@@ -79,6 +93,7 @@ func main() {
 	http.HandleFunc("/tenhelloworlds", tenHelloWorldsHandler)
 	http.HandleFunc("/therightway", rightWayHandler)
 	http.HandleFunc("/thewrongway", rightWayHandler)
+	http.HandleFunc("/fruit", fruitHandler)
 
 	fmt.Printf("Starting server on port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {

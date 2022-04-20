@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Fruit Page</title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    </head>
+    <body onload="toggleImage();">
+        <script>
+            function toggleImage() {
+               var apple = "./static/images/apple.jpg";
+               var orange = "./static/images/orange.jpg";
+               var banana = "./static/images/banana.jpg"
+
+               const fruits = [apple, orange, banana]
+               
+               var imgElement = document.getElementById('toggleImage');   
+               imgElement.src = fruits[Math.floor(Math.random() * 3)];
+            }
+        </script>
+        <img src="" class="center" id="toggleImage" />
+    </body>
+</html>
