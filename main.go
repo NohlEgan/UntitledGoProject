@@ -80,20 +80,27 @@ func fruitHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./static/fruit.html")
 }
 
+func testHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./static/test.html")
+}
+
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {
-		http.ServeFile(w, r, "./static/404.html")
+		//http.ServeFile(w, r, "./static/404.html")
+		fmt.Fprintf(w, "404 - Page Not Found")
 	}
 }
 
 func main() {
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/tenhelloworlds", tenHelloWorldsHandler)
 	http.HandleFunc("/therightway", rightWayHandler)
 	http.HandleFunc("/thewrongway", rightWayHandler)
 	http.HandleFunc("/fruit", fruitHandler)
+	http.HandleFunc("/test", testHandler)
 
 	fmt.Printf("Starting server on port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
