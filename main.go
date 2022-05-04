@@ -81,14 +81,15 @@ func fruitHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
-	//w.WriteHeader(status)
+	w.WriteHeader(status)
 	if status == http.StatusNotFound {
 		http.ServeFile(w, r, "./static/404.html")
+		fmt.Fprintf(w, "test")
 	}
 }
 
 func main() {
-	//http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/tenhelloworlds", tenHelloWorldsHandler)
