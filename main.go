@@ -84,7 +84,6 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {
 		http.ServeFile(w, r, "./static/404.html")
-		fmt.Fprintf(w, "test")
 	}
 }
 

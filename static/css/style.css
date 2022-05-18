@@ -6,11 +6,16 @@
 }
 
 .text{
-    font-size: 100px;
+    font-size: 40px;
     font-weight: bold;
+}
+
+.title{
+    font-size: 70px;
+    font-weight: bolder;
 }
 
 .br {
     display: block;
-    margin-bottom: 5em;
+    margin-bottom: 3em;
 }
